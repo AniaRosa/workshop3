@@ -8,12 +8,12 @@ import java.util.Arrays;
 public class ExerciseDao {
 
     private static final String CREATE_EXERCISE_QUERY =
-            "INSERT INTO exercise(title, description) VALUES (?, ?)";
-    private static final String READ_EXERCISE_QUERY = "SELECT * FROM exercise where id = ?";
+            "INSERT INTO exercises(title, description) VALUES (?, ?)";
+    private static final String READ_EXERCISE_QUERY = "SELECT * FROM exercises where id = ?";
     private static final String UPDATE_EXERCISE_QUERY =
-            "UPDATE exercise SET title = ?, description = ? where id = ?";
-    private static final String DELETE_EXERCISE_QUERY = "DELETE FROM exercise WHERE id = ?";
-    private static final String FIND_ALL_EXERCISE_QUERY = "SELECT * FROM exercise";
+            "UPDATE exercises SET title = ?, description = ? where id = ?";
+    private static final String DELETE_EXERCISE_QUERY = "DELETE FROM exercises WHERE id = ?";
+    private static final String FIND_ALL_EXERCISE_QUERY = "SELECT * FROM exercises";
 
 
     public Exercise create(Exercise exercise) {

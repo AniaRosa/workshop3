@@ -8,12 +8,12 @@ import java.util.Arrays;
 public class GroupDao {
 
     private static final String CREATE_GROUP_QUERY =
-            "INSERT INTO user_group(name) VALUES (?)";
-    private static final String READ_GROUP_QUERY = "SELECT * FROM user_group where id = ?";
+            "INSERT INTO user_groups(name) VALUES (?)";
+    private static final String READ_GROUP_QUERY = "SELECT * FROM user_groups where id = ?";
     private static final String UPDATE_GROUP_QUERY =
-            "UPDATE user_group SET name = ? where id = ?";
-    private static final String DELETE_GROUP_QUERY = "DELETE FROM user_group WHERE id = ?";
-    private static final String FIND_ALL_GROUP_QUERY = "SELECT * FROM user_group";
+            "UPDATE user_groups SET name = ? where id = ?";
+    private static final String DELETE_GROUP_QUERY = "DELETE FROM user_groups WHERE id = ?";
+    private static final String FIND_ALL_GROUP_QUERY = "SELECT * FROM user_groups";
 
 
     public Group create(Group user_groups) {

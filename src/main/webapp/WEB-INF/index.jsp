@@ -20,12 +20,12 @@
             <th>Data dodania</th>
             <th>Akcje</th>
         </tr>
-        <c:forEach items="${solutions}" var="solution">
+        <c:forEach items="${exercisesToView}" var="exercise">
             <tr>
-                <td>${solution.getDescription()}</td>
-                <td>${solution.getUserId()}</td>
-                <td>${solution.getCreated()}</td>
-                <td></td>
+                <td>${exercise.getExerciseTile()}</td>
+                <td>${exercise.getExerciseAuthor()}</td>
+                <td>${exercise.getExerciseCreationDate()}</td>
+                <td><a href="/details?id=${exercise.getExerciseSolutionId()}&title=${exercise.getExerciseTile()}">Details</a> </td>
             </tr>
         </c:forEach>
     </table>

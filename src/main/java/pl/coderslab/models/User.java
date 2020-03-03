@@ -5,6 +5,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.util.StringJoiner;
 
 public class User {
+
     private int id;
     private String userName;
     private String email;
@@ -75,5 +76,4 @@ public class User {
                 .add("groupId=" + userGroupId)
                 .toString();
     }
-
 }

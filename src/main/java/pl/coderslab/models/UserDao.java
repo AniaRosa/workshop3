@@ -14,6 +14,7 @@ public class UserDao {
             "UPDATE users SET username = ?, email = ?, password = ?, user_group_id = ? where id = ?";
     private static final String DELETE_USER_QUERY = "DELETE FROM users WHERE id = ?";
     private static final String FIND_ALL_USERS_QUERY = "SELECT * FROM users";
+    private static final String FIND_ALL_GROUP_USERS_QUERY = "SELECT * FROM users WHERE user_group_id = ?";
 
 
     public User create(User user) {
@@ -42,13 +43,7 @@ public class UserDao {
             statement.setInt(1, userId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setUserName(resultSet.getString("username"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPassword(resultSet.getString("password"));
-                user.setUserGroupId(resultSet.getInt("user_group_id"));
-                return user;
+                return getUser(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,13 +81,22 @@ public class UserDao {
             PreparedStatement statement = conn.prepareStatement(FIND_ALL_USERS_QUERY);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setUserName(resultSet.getString("username"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPassword(resultSet.getString("password"));
-                user.setUserGroupId(resultSet.getInt("user_group_id"));
-                users = addToArray(user, users);
+                users = addToArray(getUser(resultSet), users);
+            }
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public User[] findAllByGroupId(int groupId){
+        try (Connection conn = DBUtil.getConnection()) {
+            User[] users = new User[0];
+            PreparedStatement statement = conn.prepareStatement(FIND_ALL_GROUP_USERS_QUERY);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                users = addToArray(getUser(resultSet), users);
             }
             return users;
         } catch (SQLException e) {
@@ -105,5 +109,16 @@ public class UserDao {
         User[] tmpUsers = Arrays.copyOf(users, users.length + 1);
         tmpUsers[users.length] = u;
         return tmpUsers;
+    }
+
+    public User getUser(ResultSet resultSet) throws SQLException{
+        User user = new User();
+        user.setId(resultSet.getInt("id"));
+        user.setUserName(resultSet.getString("username"));
+        user.setEmail(resultSet.getString("email"));
+        user.setPassword(resultSet.getString("password"));
+        user.setUserGroupId(resultSet.getInt("user_group_id"));
+
+        return user;
     }
 }

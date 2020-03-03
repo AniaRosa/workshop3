@@ -3,6 +3,7 @@ package pl.coderslab.models;
 import java.util.StringJoiner;
 
 public class Group {
+
     private int id;
     private String name;
 
@@ -36,5 +37,4 @@ public class Group {
                 .add("name='" + name + "'")
                 .toString();
     }
-
 }

@@ -48,5 +48,4 @@ public class Exercise {
                 .add("description='" + description + "'")
                 .toString();
     }
-
 }

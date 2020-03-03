@@ -17,7 +17,7 @@ public class DBUtil {
             try {
                 Context initContext = new InitialContext();
                 Context envContext = (Context)initContext.lookup("java:/comp/env");
-                dataSource = (DataSource)envContext.lookup("jdbc/school");
+                dataSource = (DataSource)envContext.lookup("jdbc/warsztaty2");
             } catch (NamingException e) { e.printStackTrace(); }
         }
         return dataSource;

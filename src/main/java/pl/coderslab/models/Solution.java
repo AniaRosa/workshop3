@@ -3,6 +3,7 @@ package pl.coderslab.models;
 import java.util.StringJoiner;
 
 public class Solution {
+
     private int id;
     private String created;
     private String updated;
