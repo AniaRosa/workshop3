@@ -18,13 +18,13 @@
         <th>Imię i nazwisko</th>
         <th>Szczegóły</th>
     </tr>
-    <tr>
-        <c:forEach items="${users}" var="user">
+    <c:forEach items="${users}" var="user">
+        <tr>
             <td>${user.getId()}</td>
             <td>${user.getUserName()}</td>
             <td><a href="/userDetails?id=${user.getId()}">Details</a> </td>
-        </c:forEach>
-    </tr>
+        </tr>
+    </c:forEach>
 </table>
 <%@include file="/WEB-INF/footer.jsp"%>
 </body>

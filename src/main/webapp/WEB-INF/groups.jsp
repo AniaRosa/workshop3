@@ -18,13 +18,13 @@
         <th>Nazwa grupy</th>
         <th>Szczegóły</th>
     </tr>
-    <tr>
-        <c:forEach items="${groups}" var="group">
+    <c:forEach items="${groups}" var="group">
+        <tr>
             <td>${group.getId()}</td>
             <td>${group.getName()}</td>
             <td><a href="/groupDetails?id=${group.getId()}">Details</a> </td>
-        </c:forEach>
-    </tr>
+        </tr>
+    </c:forEach>
 </table>
 <%@include file="/WEB-INF/footer.jsp"%>
 </body>

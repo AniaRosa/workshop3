@@ -94,6 +94,7 @@ public class UserDao {
         try (Connection conn = DBUtil.getConnection()) {
             User[] users = new User[0];
             PreparedStatement statement = conn.prepareStatement(FIND_ALL_GROUP_USERS_QUERY);
+            statement.setInt(1, groupId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 users = addToArray(getUser(resultSet), users);

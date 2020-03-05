@@ -39,6 +39,9 @@ public class Solution {
     }
 
     public String getUpdated() {
+        if (updated == null) {
+            return "";
+        }
         return updated;
     }
 
