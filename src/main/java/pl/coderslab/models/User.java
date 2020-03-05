@@ -51,7 +51,7 @@ public class User {
     }
 
     public String getPassword() {
-        return password;
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public void setPassword(String password) {
