@@ -15,6 +15,9 @@ import java.io.IOException;
 public class GroupAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name");
+        if (name.equals("")) {
+            name = "group name";
+        }
         GroupDao groupDao = new GroupDao();
         Group group = new Group(name);
         groupDao.create(group);
@@ -22,6 +25,8 @@ public class GroupAddServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Group techGroup = new Group();
+        request.setAttribute("group", techGroup);
         request.setAttribute("actionServlet", "/addGroup");
         request.setAttribute("action", "Nazwa nowej grupy");
         request.getRequestDispatcher("/WEB-INF/editOrAddGroup.jsp").forward(request, response);

@@ -17,13 +17,35 @@ import java.io.IOException;
 public class UserEditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute("userId");
+        User user = (User) session.getAttribute("user");
         String userName = request.getParameter("name");
         String userEmail = request.getParameter("email");
         String groupId = request.getParameter("group");
         String password = request.getParameter("password");
+        GroupDao groupDao = new GroupDao();
+        Group[] groups = groupDao.findAll();
+        boolean checkGroupId = false;
+        for (Group group : groups) {
+            if (group.getId() == Integer.parseInt(groupId)) {
+                checkGroupId = true;
+            }
+        }
+        if (!checkGroupId) {
+            groupId = String.valueOf(user.getUserGroupId());
+        }
+        if (userName.equals("")) {
+            userName = user.getUserName();
+        }
+        if (userEmail.equals("")) {
+            userEmail = user.getEmail();
+        }
+        if (groupId.equals("")) {
+            groupId = String.valueOf(user.getUserGroupId());
+        }
+        if (password.equals("")) {
+            password = user.getPassword();
+        }
         UserDao userDao = new UserDao();
-        User user = userDao.read(userId);
         user.setEmail(userEmail);
         user.setPassword(password);
         user.setUserGroupId(Integer.parseInt(groupId));
@@ -38,10 +60,8 @@ public class UserEditServlet extends HttpServlet {
         User user = userDao.read(Integer.parseInt(userId));
         request.setAttribute("user", user);
         request.setAttribute("actionServlet", "/userEdit");
-        //request.setAttribute("action", "Nowa nazwa grupy");
         HttpSession session = request.getSession();
-        session.setAttribute("userId", user.getId());
-        //session.setAttribute("groupName", group.getName());
+        session.setAttribute("user", user);
         request.getRequestDispatcher("/WEB-INF/editOrAddUser.jsp").forward(request, response);
     }
 }

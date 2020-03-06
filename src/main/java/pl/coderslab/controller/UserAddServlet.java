@@ -1,5 +1,6 @@
 package pl.coderslab.controller;
 
+import pl.coderslab.models.Group;
 import pl.coderslab.models.GroupDao;
 import pl.coderslab.models.User;
 import pl.coderslab.models.UserDao;
@@ -15,9 +16,49 @@ import java.io.IOException;
 public class UserAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userName = request.getParameter("name");
+        request.setAttribute("name", userName);
         String userEmail = request.getParameter("email");
+        request.setAttribute("email", userEmail);
         String groupId = request.getParameter("group");
+        request.setAttribute("groupId", groupId);
         String password = request.getParameter("password");
+        while (userName.equals("") || userEmail.equals("") || groupId.equals("") || password.equals("")) {
+            userName = request.getParameter("name");
+            request.setAttribute("name", userName);
+            userEmail = request.getParameter("email");
+            request.setAttribute("email", userEmail);
+            groupId = request.getParameter("group");
+            request.setAttribute("groupId", groupId);
+            password = request.getParameter("password");
+
+            request.setAttribute("error", "Pola nie mogą być puste!");
+            request.setAttribute("actionServlet", "/addUser");
+            request.getRequestDispatcher("/WEB-INF/editOrAddUser.jsp").forward(request, response);
+        }
+        GroupDao groupDao = new GroupDao();
+        Group[] groups = groupDao.findAll();
+        boolean checkGroupId = false;
+        for (Group group : groups) {
+            if (group.getId() == Integer.parseInt(groupId)) {
+                checkGroupId = true;
+            }
+        }
+        while (!checkGroupId) {
+            userName = request.getParameter("name");
+            request.setAttribute("name", userName);
+            userEmail = request.getParameter("email");
+            request.setAttribute("email", userEmail);
+            groupId = request.getParameter("group");
+            request.setAttribute("groupId", groupId);
+            password = request.getParameter("password");
+
+            User techUser = new User();
+            request.setAttribute("user", techUser);
+            request.setAttribute("error", "Nie ma takiej grupy!");
+            request.setAttribute("actionServlet", "/addUser");
+            request.getRequestDispatcher("/WEB-INF/editOrAddUser.jsp").forward(request, response);
+        }
+
         UserDao userDao = new UserDao();
         User user = new User(userName, userEmail, password, Integer.parseInt(groupId));
         userDao.create(user);
@@ -25,6 +66,8 @@ public class UserAddServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        User techUser = new User();
+        request.setAttribute("user", techUser);
         request.setAttribute("actionServlet", "/addUser");
         request.getRequestDispatcher("/WEB-INF/editOrAddUser.jsp").forward(request, response);
 

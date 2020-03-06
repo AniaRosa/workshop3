@@ -13,11 +13,14 @@
 </head>
 <body>
 <%@include file="/WEB-INF/header.jsp"%>
+<br>
+${error}
+<br>
 <form action=${actionServlet} method="post">
-    Imie i nazwisko użytkownika:    <input name="name" placeholder="${user.getUserName()}"> <br>
-    Adres email:                    <input name="email" placeholder="${user.getEmail()}"><br>
-    Numer grupy:                    <input name="group" placeholder="${user.getUserGroupId()}"><br>
-    Hasło:                          <input name="password" placeholder="${user.getPassword()}" type="password"><br>
+    Imie i nazwisko użytkownika:    <input name="name" placeholder="${user.getUserName()}" value="${userName}"> <br>
+    Adres email:                    <input name="email" placeholder="${user.getEmail()}" value="${userEmail}"><br>
+    Numer grupy:                    <input name="group" placeholder="${user.getUserGroupId()}" value="${groupId}"><br>
+    Hasło:                          <input name="password" type="password"><br>
     <button>Prześlij</button>
 </form>
 

@@ -15,12 +15,14 @@ import java.io.IOException;
 public class GroupEditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Integer groupId = (Integer) session.getAttribute("groupId");
+        Group group = (Group) session.getAttribute("group");
         String name = request.getParameter("name");
+        if (name.equals("")) {
+            name = group.getName();
+        }
         GroupDao groupDao = new GroupDao();
-        Group group = groupDao.read(groupId);
         group.setName(name);
-        group.setId(groupId);
+        group.setId(group.getId());
         groupDao.update(group);
         response.sendRedirect(request.getContextPath() + "/groupsList");
     }
@@ -33,8 +35,7 @@ public class GroupEditServlet extends HttpServlet {
         request.setAttribute("actionServlet", "/groupEdit");
         request.setAttribute("action", "Nowa nazwa grupy");
         HttpSession session = request.getSession();
-        session.setAttribute("groupId", group.getId());
-        session.setAttribute("groupName", group.getName());
+        session.setAttribute("group", group);
         request.getRequestDispatcher("/WEB-INF/editOrAddGroup.jsp").forward(request, response);
 
     }
