@@ -17,9 +17,14 @@
 ${error}
 <br>
 <form action=${actionServlet} method="post">
-    Imie i nazwisko użytkownika:    <input name="name" placeholder="${user.getUserName()}" value="${userName}"> <br>
-    Adres email:                    <input name="email" placeholder="${user.getEmail()}" value="${userEmail}"><br>
-    Numer grupy:                    <input name="group" placeholder="${user.getUserGroupId()}" value="${groupId}"><br>
+    Imie i nazwisko użytkownika:    <input name="name" placeholder="${user.getUserName()}" value="${name}"> <br>
+    Adres email:                    <input name="email" placeholder="${user.getEmail()}" value="${email}"><br>
+    Numer grupy:                    <select name="group" placeholder="${user.getUserGroupId()}">
+                                        <option value="${user.getUserGroupId()}" selected>${user.getUserGroupId()}</option>
+                                    <c:forEach items="${groups}" var="group">
+                                        <option value="${group.getId()}">${group.getId()}</option>
+                                    </c:forEach>
+                                    </select><br>
     Hasło:                          <input name="password" type="password"><br>
     <button>Prześlij</button>
 </form>

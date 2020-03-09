@@ -22,25 +22,11 @@ public class UserEditServlet extends HttpServlet {
         String userEmail = request.getParameter("email");
         String groupId = request.getParameter("group");
         String password = request.getParameter("password");
-        GroupDao groupDao = new GroupDao();
-        Group[] groups = groupDao.findAll();
-        boolean checkGroupId = false;
-        for (Group group : groups) {
-            if (group.getId() == Integer.parseInt(groupId)) {
-                checkGroupId = true;
-            }
-        }
-        if (!checkGroupId) {
-            groupId = String.valueOf(user.getUserGroupId());
-        }
         if (userName.equals("")) {
             userName = user.getUserName();
         }
         if (userEmail.equals("")) {
             userEmail = user.getEmail();
-        }
-        if (groupId.equals("")) {
-            groupId = String.valueOf(user.getUserGroupId());
         }
         if (password.equals("")) {
             password = user.getPassword();
@@ -58,6 +44,9 @@ public class UserEditServlet extends HttpServlet {
         String userId = request.getParameter("id");
         UserDao userDao = new UserDao();
         User user = userDao.read(Integer.parseInt(userId));
+        GroupDao groupDao = new GroupDao();
+        Group[] groups = groupDao.findAll();
+        request.setAttribute("groups", groups);
         request.setAttribute("user", user);
         request.setAttribute("actionServlet", "/userEdit");
         HttpSession session = request.getSession();

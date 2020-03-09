@@ -59,6 +59,9 @@ public class User {
     }
 
     public int getUserGroupId() {
+        if (userGroupId == 0) {
+            return 1;
+        }
         return userGroupId;
     }
 
